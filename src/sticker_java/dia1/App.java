@@ -1,13 +1,7 @@
 package sticker_java.dia1;
 
-
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
 import java.util.List;
 import java.util.Map;
 
@@ -21,18 +15,14 @@ public class App {
 		/*String url= "https://raw.githubusercontent.com/alura-cursos/imersao-java/api/TopMovies.json";*///url da api
 		String url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&start_date=2022-06-12&end_date=2022-06-14";
 		
-		URI endereco = URI.create(url);
-		HttpClient client = HttpClient.newHttpClient();
-		//request
-		HttpRequest request = HttpRequest.newBuilder(endereco).GET().build();
-		HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
-		String body = response.body();
 		
-		//System.out.println(body);
+		var http = new ClienteHttp();
+		String json = http.buscaDados(url);
+		
 		
 		//pegar sï¿½ os dados que interessam(titulo,poster,classificaï¿½ï¿½o)
 		JsonParser parser = new JsonParser();
-		List <Map<String,String>> listaDeConteudos= parser.parse(body);
+		List <Map<String,String>> listaDeConteudos= parser.parse(json);
 		//System.out.println(listaDeconteudos.size());
 		
 		//System.out.println(listaDeconteudos.size());
@@ -59,9 +49,9 @@ public class App {
 				String urlImagem = conteudo.get("url").replaceAll("(@+)(.*).jpg","S1.jpg");
 				String titulo = conteudo.get("title");
 				
-				
+				//diretorio "java_Sticker\\src\\img" 
 				InputStream inputStream = new URL(urlImagem).openStream();
-				String nomeArquivo =   conteudo.get("title") + ".png";
+				String nomeArquivo =   conteudo.get(titulo) + ".png";
 				
 				
 				geradora.cria(inputStream, nomeArquivo);
