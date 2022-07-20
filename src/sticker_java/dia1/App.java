@@ -1,7 +1,6 @@
 package sticker_java.dia1;
 
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
@@ -52,7 +51,7 @@ public class App {
 		
 		var geradora = new GeradorDeSticker();
 		
-		for(int i = 0; i< 2; i++) {
+		for(int i = 0; i< 3; i++) {
 		
 			Map<String,String> conteudo = listaDeConteudos.get(i);
 			
@@ -62,7 +61,7 @@ public class App {
 				
 				
 				InputStream inputStream = new URL(urlImagem).openStream();
-				String nomeArquivo =  " javaSticker/java_Sticker/src/saida/" + titulo + ".png";
+				String nomeArquivo =   conteudo.get("title") + ".png";
 				
 				
 				geradora.cria(inputStream, nomeArquivo);
