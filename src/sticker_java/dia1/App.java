@@ -17,14 +17,14 @@ public class App {
 
 	public static void main(String[] args) throws Exception{
 		
-		//fazer uma conenexï¿½o HTTP e buscar os top 250 filmes
+		//fazer uma conenexï¿½o HTTP e buscar os top 250 conteudos
 		
-		String url= "https://raw.githubusercontent.com/alura-cursos/imersao-java/api/TopMovies.json";//url da api
+		/*String url= "https://raw.githubusercontent.com/alura-cursos/imersao-java/api/TopMovies.json";*///url da api
+		String url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&start_date=2022-06-12&end_date=2022-06-14";
+		
 		URI endereco = URI.create(url);
 		HttpClient client = HttpClient.newHttpClient();
-		
 		//request
-		
 		HttpRequest request = HttpRequest.newBuilder(endereco).GET().build();
 		HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 		String body = response.body();
@@ -33,11 +33,11 @@ public class App {
 		
 		//pegar sï¿½ os dados que interessam(titulo,poster,classificaï¿½ï¿½o)
 		JsonParser parser = new JsonParser();
-		List <Map<String,String>> listaDeFilmes = parser.parse(body);
-		//System.out.println(listaDeFilmes.size());
+		List <Map<String,String>> listaDeConteudos= parser.parse(body);
+		//System.out.println(listaDeconteudos.size());
 		
-		//System.out.println(listaDeFilmes.size());
-		//System.out.println(listaDeFilmes.get(0));
+		//System.out.println(listaDeconteudos.size());
+		//System.out.println(listaDeconteudos.get(0));
 		
 		
 		//exibir e manipular os dados
@@ -48,38 +48,40 @@ public class App {
         System.out.println (CSI + "m");
 		*/
 		
-		//imprime todos os filmes
+		//imprime todos os conteudos
 		
 		var geradora = new GeradorDeSticker();
 		
-		for(Map<String,String> filme: listaDeFilmes) {
-			
-			
-			String urlImagem = filme.get("image");
-			String titulo = filme.get("title");
-			
-			
-			InputStream inputStream = new URL(urlImagem).openStream();
-			String nomeArquivo = titulo + ".png";
-			
-			
-			geradora.cria(inputStream, nomeArquivo);
-			
-			System.out.println(titulo);
-			System.out.println();
-			/*
-			System.out.println("#######################################################################");
-			System.out.println("Nome do filme");
-			System.out.println(filme.get("title"));
-			System.out.println("Cartaz do filme ");
-			System.out.println(filme.get("image"));
-			System.out.println("Nota do filme");
-			System.out.println(filme.get("imDbRating"));
-			System.out.println("#######################################################################");
-			System.out.println(); 
-			*/
-		}
+		for(int i = 0; i< 2; i++) {
 		
+			Map<String,String> conteudo = listaDeConteudos.get(i);
+			
+			//conteudo.get("image")
+				String urlImagem = conteudo.get("url").replaceAll("(@+)(.*).jpg","S1.jpg");
+				String titulo = conteudo.get("title");
+				
+				
+				InputStream inputStream = new URL(urlImagem).openStream();
+				String nomeArquivo =  " javaSticker/java_Sticker/src/saida/" + titulo + ".png";
+				
+				
+				geradora.cria(inputStream, nomeArquivo);
+				
+				System.out.println(titulo);
+				System.out.println();
+				/*
+				System.out.println("#######################################################################");
+				System.out.println("Nome do conteudo");
+				System.out.println(conteudo.get("title"));
+				System.out.println("Cartaz do conteudo ");
+				System.out.println(conteudo.get("image"));
+				System.out.println("Nota do conteudo");
+				System.out.println(conteudo.get("imDbRating"));
+				System.out.println("#######################################################################");
+				System.out.println(); 
+				*/
+		
+		}
 		 
 
 	}
