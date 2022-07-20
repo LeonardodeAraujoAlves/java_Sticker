@@ -20,9 +20,7 @@ public class App {
 		String json = http.buscaDados(url);
 		
 		
-		//pegar sï¿½ os dados que interessam(titulo,poster,classificaï¿½ï¿½o)
-		JsonParser parser = new JsonParser();
-		List <Map<String,String>> listaDeConteudos= parser.parse(json);
+		
 		//System.out.println(listaDeconteudos.size());
 		
 		//System.out.println(listaDeconteudos.size());
@@ -47,7 +45,7 @@ public class App {
 			
 			//conteudo.get("image")
 				String urlImagem = conteudo.get("url").replaceAll("(@+)(.*).jpg","S1.jpg");
-				String titulo = conteudo.get("title");
+				
 				
 				//diretorio "java_Sticker\\src\\img" 
 				InputStream inputStream = new URL(urlImagem).openStream();
@@ -56,8 +54,8 @@ public class App {
 				
 				geradora.cria(inputStream, nomeArquivo);
 				
-				System.out.println(titulo);
-				System.out.println();
+				//System.out.println(titulo);
+				//System.out.println();
 				/*
 				System.out.println("#######################################################################");
 				System.out.println("Nome do conteudo");
